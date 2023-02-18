@@ -73,8 +73,12 @@ class AzureDataLakeClient(AzureBaseClient):
         """
         List file systems/containers
         """
-        file_systems = self.service_client.list_file_systems()
-        return list(file_systems)
+        try:
+            file_systems = self.service_client.list_file_systems()
+            return list(file_systems)
+        except Exception as exception:
+            print(exception)
+            raise exception
 
     def create_directory(
         self, name: str, file_system_client: FileSystemClient | None = None
