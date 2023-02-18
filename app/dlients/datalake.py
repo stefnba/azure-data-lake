@@ -8,7 +8,7 @@ https://learn.microsoft.com/en-us/python/api/azure-storage-file-datalake/azure.s
 
 import os
 from azure.core.paging import ItemPaged
-from azure.identity import DefaultAzureCredential
+
 from azure.core.exceptions import ClientAuthenticationError, ResourceExistsError
 from azure.storage.filedatalake import (
     DataLakeServiceClient,
@@ -17,18 +17,10 @@ from azure.storage.filedatalake import (
     DataLakeFileClient,
     PathProperties,
 )
-
-# from azure.core._match_conditions import MatchConditions
-# from azure.storage.filedatalake._models import ContentSettings
-
-from typing import cast, overload
-from dotenv import load_dotenv
-from azure.storage.blob import BlobClient
-
-load_dotenv()
+from .base import AzureBaseClient
 
 
-class AzureDataLake:
+class AzureDataLakeClient(AzureBaseClient):
     """
     DataLakeServiceClient has several sub-clients:
     - FileSystemClient (similar to containers)
@@ -38,23 +30,7 @@ class AzureDataLake:
 
     service_client: DataLakeServiceClient
     file_system_client: FileSystemClient
-    file_client: DataLakeFileClient
-
-    def __init__(self) -> None:
-        self.init()
-
-    def auth(self):
-        """
-        Authenticates application through DefaultAzureCredential.
-        """
-        credential = DefaultAzureCredential()
-        return credential
-
-    def close(self):
-        """
-        Close client.
-        """
-        self.service_client.close()
+    file_client: DataLakeFileClient   
 
     def init(self):
         """
@@ -64,7 +40,7 @@ class AzureDataLake:
         try:
             credential = self.auth()
             self.service_client = DataLakeServiceClient(
-                account_url="https://uniquestocks.dfs.core.windows.net/", credential=credential
+                account_url=self.account_url, credential=credential
             )
         except ClientAuthenticationError as exception:
             print("dd", exception)
