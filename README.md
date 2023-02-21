@@ -15,10 +15,6 @@ make install-dev
 
 Authentification is done through [DefaultAzureCredential](https://learn.microsoft.com/en-us/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python).
 
-```bash
-pip install azure-identity
-```
-
 ```py
 from azure.identity import DefaultAzureCredential
 credential = DefaultAzureCredential()
