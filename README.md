@@ -4,6 +4,13 @@ Python SDK for Azure Storage.
 
 ## Getting started
 
+Setup virtual environment and install packages.
+
+```bash
+make setup
+make install-dev
+```
+
 ## Authentification
 
 Authentification is done through [DefaultAzureCredential](https://learn.microsoft.com/en-us/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python).
